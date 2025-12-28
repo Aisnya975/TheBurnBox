@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+        background-color: #222;
+        color:white;
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        }
+
+        #Container {
+            text-align: center;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 69, 0, 0.5);
+        }
+
+        #VentingArea {
+            width: 380px;
+            height: 150px;
+            padding: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: none;
+        }
+
+        #BurnBTN {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: orangered;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+
+        #BurnBTN:hover {
+            background-color:red;
+            transform: scale(1.05);
+        }
+
+        /* 1. Definisikan Gerakannya */
+@keyframes burn-Process {
+    0% { 
+        transform: translate(0, 0); 
+        background-color: #333; 
+    }
+    25% { 
+        transform: translate(-10px, 10px) rotate(-5deg); /* Bergetar ke kiri */
+        background-color: #800; /* Jadi merah gelap */
+    }
+    50% { 
+        transform: translate(10px, -10px) rotate(5deg); /* Bergetar ke kanan */
+        background-color: #ff4500; /* Merah api */
+        opacity: 1;
+    }
+    100% { 
+        transform: scale(0) rotate(20deg); /* Mengecil sampai hilang */
+        opacity: 0; /* Transparan total */
+    }
+}
+
+/* 2. Buat Class untuk memanggil gerakan itu */
+.on-fire {
+    animation-name: burn-Process;
+    animation-duration: 1.5s; /* Durasi 1.5 detik */
+    animation-fill-mode: forwards; /* Setelah selesai, tetap di kondisi akhir (hilang) */
+}
+    </style>
+    <title>The Burn Box</title>
+</head>
+<body>
+    <div id="Container">
+    <textarea name="VentingArea" id="VentingArea" placeholder="Write Your Anger Here..."></textarea>
+    <button id="BurnBTN">BURN</button>
+    </div>
+
+    <script>
+        let inputUser = document.getElementById('VentingArea');
+        let burnButton = document.getElementById('BurnBTN');
+        let mainContainer = document.getElementById('Container')
+
+        console.log("Input:", inputUser);
+        console.log("Button:", burnButton);
+
+        burnButton.addEventListener('click', function () {
+            if (inputUser.value == ""){
+                alert("Write Down Your Complaints First!!");
+                return;
+            }
+        mainContainer.classList.add('on-fire');
+
+        setTimeout(function(){
+            inputUser.value="";  
+        setTimeout(function()  {
+            mainContainer.classList.remove('on-fire');
+            inputUser.placeholder = "Are you relieved? Write again if necessary!...";
+        }, 1000);
+        }, 1500);
+        });
+    </script>
+</body>
+</html>
